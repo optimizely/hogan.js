@@ -6,27 +6,24 @@
     "mustache",
     "template"
   ],
-  "main": "./lib/hogan.js",
+  "main": "./lib/compiler.js",
   "homepage": "http://twitter.github.com/hogan.js/",
   "author": "Twitter Inc.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/twitter/hogan.js.git"
+    "url": "https://github.com/optimizely/hogan.js.git"
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "gzip-size": "^3.0.0",
     "mkdirp": "0.3.0",
     "nopt": "1.0.10"
   },
   "devDependencies": {
+    "gzip-size": "^3.0.0",
     "jsdom": "0.3.4",
     "rimraf": "2.0.1",
     "step": "0.0.5",
     "uglify-js": "2.x",
     "webpack": "^1.12.9"
-  },
-  "bin": {
-    "hulk": "./bin/hulk"
   }
 }

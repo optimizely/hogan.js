@@ -1,19 +1,20 @@
-var Hogan = require('./lib/hogan')
-var T = require('./dist/template-3.0.2')
+var fs = require('fs')
+var path = require('path')
+var Compiler = require('./lib/compiler')
+var runtime = fs.readFileSync(path.join(__dirname, 'runtime.js'), 'utf8');
+var getHogan = new Function(runtime + '; return Hogan')
+var Hogan = getHogan();
 
-var string
-//var t = Hogan.compile('hello {{ name }}.  Im {{ person.name }}\nlist {{^banana}} foo {{/banana}}{{#list}} {{id}} {{/list}}')
-var t = Hogan.compile('{{#banana}} {{banana}} {{/banana}}', { asString: 1})
-console.log(t)
+var t = Compiler.compile('Hello {{name}} im {{ person.name }} banana{{^peeled}} peel {{/peeled}}{{#list}}{{id}} {{/list}}', { asString: 1})
 var fn = new Function('return ' + t)
-var t = new T.Template(fn());
+var t = new Hogan(fn());
 
 
 
 
 var output = t.render({
   name: 'jordan',
-  banana: 'peel',
+  peeled: false,
   person: {
     name: 'computer',
   },
@@ -23,5 +24,7 @@ var output = t.render({
     { id: 'third' },
   ],
 });
-console.log(output)
+var expected = 'Hello jordan im computer banana peel first second third ';
+console.assert(expected === output)
+console.log('SUCCESS')
 
